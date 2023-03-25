@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
         height: HEIGHT,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#141414',
+        backgroundColor: '#36363A',
         borderRadius: MARGIN_BOTTOM,
         justifyContent: 'space-between',
     },
