@@ -14,4 +14,5 @@ export const CARDS = [
     {id: 13, title: "Unreal Engine"},
     {id: 14, title: "Reanimated v3"},
     {id: 15, title: "Flutter"},
+    {id: 16, title: "Typescript"},
 ]

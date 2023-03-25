@@ -5,6 +5,7 @@ import Animated, {
     SharedValue,
     useSharedValue,
     useAnimatedStyle,
+    useAnimatedReaction,
 } from "react-native-reanimated";
 import { GestureDetector, Gesture } from "react-native-gesture-handler";
 
@@ -41,6 +42,16 @@ export const MovableCard = ({ data, cardsPosition, scrollY, cardCount }: Props) 
         return newPositions;
     };
 
+    useAnimatedReaction(() => cardsPosition.value[data.id],
+        (currentPosition, previousPosition) => {
+            if (currentPosition !== previousPosition) {
+                if (!moving) {
+                    top.value = withSpring(currentPosition * CARD_HEIGHT);
+                }
+            };
+        }, [moving]
+    );
+
     const longPressGesture = Gesture
         .LongPress()
         .onStart(() => {
@@ -51,7 +62,7 @@ export const MovableCard = ({ data, cardsPosition, scrollY, cardCount }: Props) 
     const panGesture = Gesture
         .Pan()
         .manualActivation(true)
-        .onTouchesDown((_, state) => {
+        .onTouchesMove((_, state) => {
             moving ? state.activate() : state.fail();
         })
         .onUpdate((event) => {
@@ -70,8 +81,11 @@ export const MovableCard = ({ data, cardsPosition, scrollY, cardCount }: Props) 
             };
         })
         .onFinalize(() => {
+            const newPosition = cardsPosition.value[data.id] * CARD_HEIGHT;
+            top.value = withSpring(newPosition);
             runOnJS(setMoving)(false);
-        });
+        })
+        .simultaneousWithExternalGesture(longPressGesture);
 
     const animatedStyle = useAnimatedStyle(() => {
         return {
