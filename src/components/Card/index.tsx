@@ -2,9 +2,9 @@ import { View, Text } from 'react-native'
 
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { styles } from './styles'
+import { HEIGHT, MARGIN_BOTTOM, styles } from './styles'
 
-// export const CARD_HEIGHT = HEIGHT + MARGIN_BOTTOM;
+export const CARD_HEIGHT = HEIGHT + MARGIN_BOTTOM;
 
 export type CardProps = {
     id: number;
